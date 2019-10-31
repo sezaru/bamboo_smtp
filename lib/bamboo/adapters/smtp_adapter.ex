@@ -213,14 +213,13 @@ defmodule Bamboo.SMTPAdapter do
   defp add_common_attachment_header(body, attachment) do
     <<random::size(32)>> = :crypto.strong_rand_bytes(4)
 
-    body =
-      body
-      |> add_smtp_line(
-        "Content-Type: #{attachment.content_type}; name=\"#{attachment.filename}\""
-      )
-      |> add_smtp_line("Content-Disposition: attachment; filename=\"#{attachment.filename}\"")
-      |> add_smtp_line("Content-Transfer-Encoding: base64")
-      |> add_smtp_line("X-Attachment-Id: #{random}")
+    body
+    |> add_smtp_line(
+      "Content-Type: #{attachment.content_type}; name=\"#{attachment.filename}\""
+    )
+    |> add_smtp_line("Content-Disposition: attachment; filename=\"#{attachment.filename}\"")
+    |> add_smtp_line("Content-Transfer-Encoding: base64")
+    |> add_smtp_line("X-Attachment-Id: #{random}")
   end
 
   defp add_attachment_body(body, data) do
